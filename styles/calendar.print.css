@@ -1,0 +1,130 @@
+@page {
+  size: A4;
+  margin: 6mm 11mm 11mm 6mm;
+}
+
+@media print {
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* скрываем экранный UI */
+  .topbar,
+  .controls,
+  .langSwitch,
+  .btn {
+    display: none !important;
+  }
+
+  html,
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: white !important;
+  }
+
+  .page {
+    padding: 0 !important;
+    background: white !important;
+  }
+
+  .content {
+    max-width: none !important;
+  }
+
+  .sheetWrap {
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    overflow: visible !important;
+    --sheet-scale: 1 !important;
+
+    /* возвращаем A4-параметры независимо от мобильных переменных */
+    --month-gutter: 14mm;
+    --row-gap: 1mm;
+    --col-gap: 2mm;
+    --month-gap: 3mm;
+    --cell-h: 9mm;
+  }
+
+  /* КЛЮЧЕВОЕ: НЕ фиксируем высоту в печати, чтобы не резало */
+  .sheet {
+    width: 100% !important;
+    max-width: 186mm !important; /* чтобы на десктопе оставалось как было */
+    box-sizing: border-box !important;
+
+    border: none !important;
+    border-radius: 0 !important;
+
+    height: auto !important;       /* было 268mm -> это и резало */
+    min-height: 0 !important; /* или auto, но 0 надежнее */
+    overflow: visible !important;  /* чтобы не обрезало низ */
+
+    /* заголовок печати пусть будет обычным блоком */
+    padding-top: 0 !important;
+    transform: none !important;
+  }
+
+  /* показываем заголовок и делаем его “как заголовок листа” */
+  .printTitle {
+    display: block !important;
+    text-align: center !important;
+    font-weight: 800 !important;
+    font-size: 16pt !important;
+    margin: 0 0 4mm 0 !important;
+  }
+
+  /* гарантируем, что цитата всегда в потоке */
+  .quote {
+    position: static !important;
+    margin-top: 3mm !important;
+  }
+
+  /* можно чуть уменьшить расстояние между месяцами в печати (НЕ обязательно)
+     если хочешь 1:1 — удали этот блок */
+  .months {
+    gap: var(--month-gap-print) !important;
+  }
+
+  /* на печати всегда десктопная раскладка месяца */
+  .month {
+    grid-template-columns: var(--month-gutter) 1fr !important;
+  }
+
+  /*
+    Дополнительное "ужатие" только для WebKit (Safari / iOS),
+    чтобы всё гарантированно помещалось на одну страницу A4.
+    Десктопный Chrome/Firefox это правило игнорируют.
+  */
+  @supports (-webkit-touch-callout: none) {
+    .sheetWrap {
+      --cell-h: 8.2mm;
+      --month-gap: 2.4mm;
+      --month-gap-print: 1.1mm;
+      --row-gap: 0.9mm;
+    }
+ .sheet {
+      max-width: 180mm !important; /* под iOS поля/скейл */
+    }
+    .monthBody {
+      padding-top: 1.6mm !important;
+      padding-bottom: 1.6mm !important;
+    }
+    .cell {
+      justify-content: center !important;
+      gap: 0.1mm !important;
+      padding: 0.1mm !important;
+    }
+    .cellDate,
+    .cellValue {
+      font-size: 8.5pt !important;
+      min-width: 8mm !important;   /* вот тут уменьшаем ширину */
+    }
+
+    .quoteText,
+    .quoteAuthor {
+      font-size: 8.5pt !important;
+    }
+  }
+}

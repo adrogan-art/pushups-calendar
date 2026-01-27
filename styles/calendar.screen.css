@@ -1,0 +1,339 @@
+/* =========================
+   Screen UI (desktop + mobile)
+   ========================= */
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.page {
+  min-height: 100vh;
+  background: #f6f1ef;
+  padding: 24px;
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+.content {
+  max-width: 980px;
+  margin: 0 auto;
+  display: grid;
+  gap: 14px;
+}
+
+/* ===== topbar ===== */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.screenTitle {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.topbarRight {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Стабильный вид переключателя RU/EN */
+.langSwitch {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  padding: 4px;
+  border-radius: 12px;
+  border: 1px solid #e5e5e5;
+  background: #fff;
+}
+
+.langSwitch a,
+.langSwitch button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-weight: 800;
+  color: #111;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.langSwitch a[aria-current="page"],
+.langSwitch a.active,
+.langSwitch button.active {
+  background: #f3f3f3;
+}
+
+/* ===== controls ===== */
+
+.controls {
+  background: #ffffff;
+  border: 1px solid #ececec;
+  border-radius: 14px;
+  padding: 14px;
+  display: grid;
+  gap: 12px;
+}
+
+.control {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  align-items: center;
+  gap: 10px;
+}
+
+.label {
+  font-weight: 800;
+  opacity: 0.8;
+}
+
+.input {
+  width: 100%;
+  padding: 10px 10px;
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+  background: white;
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: 100%;
+  display: block;
+}
+
+.period {
+  margin: 0;
+  opacity: 0.75;
+}
+
+/* ===== buttons ===== */
+
+.btn {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #e5e5e5;
+  background: white;
+  cursor: pointer;
+}
+
+/* ===== sheet preview wrapper ===== */
+
+.sheetWrap {
+  background: #eef3f6;
+  border: 1px solid #e8edf0;
+  border-radius: 14px;
+  padding: 14px;
+
+  display: flex;
+  justify-content: center;
+
+  overflow-x: hidden;
+  overflow-y: visible;
+
+  --sheet-scale: 1;
+}
+
+.sheet {
+  transform: scale(var(--sheet-scale));
+  transform-origin: top center;
+}
+
+/* =========================
+   MOBILE (screen only, не влияет на печать)
+   ========================= */
+
+@media screen and (max-width: 640px) {
+  .page {
+    padding: 12px 8px;
+  }
+
+  .content {
+    max-width: none;
+    gap: 12px;
+  }
+
+  .screenTitle {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .topbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .topbarRight {
+    justify-content: space-between;
+  }
+
+  .controls {
+    padding: 12px;
+  }
+
+  .control {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  /* дни недели только в первом месяце */
+  .month .dow {
+    display: none;
+  }
+  .month.showDow .dow {
+    display: grid;
+  }
+
+  /* мобильная раскладка месяца: заголовок сверху */
+  .month {
+    grid-template-columns: 1fr;
+  }
+
+  .monthLabel {
+    justify-content: flex-start;
+    padding: 8px 10px 0 10px;
+  }
+
+  .monthLabelText {
+    transform: none;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 9pt;
+    font-weight: 800;
+    opacity: 0.9;
+  }
+
+  .monthBody {
+    padding: 6px 10px 10px 10px;
+  }
+
+  .dowCell {
+    font-size: 6pt;
+  }
+
+  /* ========= ключевые размеры на мобиле =========
+     Используем "vw-like" единицу:
+     - по умолчанию 20.6vw
+     - если есть svw, подменяем на 20.6svw
+  */
+  .sheetWrap {
+    padding: 8px;
+    border-radius: 16px;
+
+    --month-gutter: 0mm;
+
+    /* gaps */
+    --row-gap: clamp(0.7mm, 0.35vw, 0.95mm);
+    --col-gap: clamp(1.4mm, 0.55vw, 1.9mm);
+    --month-gap: clamp(2.2mm, 0.8vw, 3.2mm);
+
+    /* fonts */
+    --date-fs: clamp(7.2pt, 1.9vw, 9pt);
+    --val-fs: clamp(6pt, 1.6vw, 7pt);
+
+    /* main size: cell height */
+    --vw20: 20.6vw;
+    --cell-h: clamp(4.5mm, calc(var(--vw20) - 15.9mm), 7.5mm);
+
+    /* pill sizes */
+    --pill-w: clamp(3.8mm, calc(1.0vw + 3.3mm), 5.6mm);
+    --pill-h: clamp(3.4mm, calc(0.8vw + 3.0mm), 4.2mm);
+  }
+
+  @supports (width: 1svw) {
+    .sheetWrap {
+      --vw20: 20.6svw;
+      --cell-h: clamp(4.5mm, calc(var(--vw20) - 15.9mm), 7.5mm);
+
+      /* чтобы формулы тоже стали "stable" по ширине */
+      --date-fs: clamp(7.2pt, 1.9svw, 9pt);
+      --val-fs: clamp(6pt, 1.6svw, 7pt);
+      --pill-w: clamp(3.8mm, calc(1.0svw + 3.3mm), 5.6mm);
+      --pill-h: clamp(3.4mm, calc(0.8svw + 3.0mm), 4.2mm);
+      --row-gap: clamp(0.7mm, 0.35svw, 0.95mm);
+      --col-gap: clamp(1.4mm, 0.55svw, 1.9mm);
+      --month-gap: clamp(2.2mm, 0.8svw, 3.2mm);
+    }
+  }
+
+  /* внутренняя компоновка клетки */
+  .cell {
+    height: var(--cell-h);
+    padding: 1mm;
+  }
+
+  .cellDate {
+    font-size: var(--date-fs);
+    min-width: 0;
+  }
+
+  .cellValue {
+    font-size: var(--val-fs);
+    min-width: var(--pill-w);
+    height: var(--pill-h);
+    border-radius: 5px;
+    padding: 0 1.0mm;
+    flex: 0 0 auto;
+  }
+
+  .cellValue100 {
+    /* 100 шире */
+    min-width: clamp(6.8mm, calc(1.2vw + 6.0mm), 8.6mm);
+    padding: 0 1.3mm;
+  }
+
+  @supports (width: 1svw) {
+    .cellValue100 {
+      min-width: clamp(6.8mm, calc(1.2svw + 6.0mm), 8.6mm);
+    }
+  }
+}
+@supports (-webkit-touch-callout: none) {
+  input[type="date"].input {
+    width: calc(100% - 250px);
+  }
+}
+/* =========================
+   TINY phones (SE etc.) — экранный режим
+   ========================= */
+
+@media screen and (max-width: 390px) {
+  .sheetWrap {
+    /* делаем меньше, чтобы pill не наезжал */
+    --col-gap: 1.35mm;
+    --row-gap: 0.65mm;
+
+    --date-fs: 7.2pt;
+    --val-fs: 4.6pt;
+
+    --pill-w: 4.8mm;
+    --pill-h: 3.2mm;
+  }
+
+  .cell {
+    padding: 0.85mm;
+  }
+
+  .cellValue {
+    min-width: var(--pill-w);
+    height: var(--pill-h);
+    font-size: var(--val-fs);
+    padding: 0 0.9mm;
+    border-radius: 5px;
+  }
+
+  .cellValue100 {
+    min-width: 6.0mm;
+    padding: 0 1.2mm;
+  }
+}
