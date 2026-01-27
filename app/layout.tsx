@@ -16,12 +16,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "100 отжиманий — календарь прогресса",
-  description: "Трекер на 100 дней: отмечай выполненные дни, печатай календарь и держи темп.",
+  title: "100 отжиманий — календарь",
+  description: "Трекер на 100 дней: печатай календарь и отмечай дни!",
   metadataBase: new URL("https://100pushapp.vercel.app"),
   openGraph: {
-    title: "100 отжиманий — календарь прогресса",
-    description: "Трекер на 100 дней: отмечай выполненные дни, печатай календарь и держи темп.",
+    title: "100 отжиманий — календарь",
+    description: "Трекер на 100 дней: печатай календарь и отмечай дни!",
     url: "/",
     siteName: "100PushApp",
     type: "website",
