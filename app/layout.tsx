@@ -27,9 +27,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/og.png",
-        width: 1200,
-        height: 630,
+        url: "/og.jpg",
         alt: "Календарь 100 отжиманий",
       },
     ],
