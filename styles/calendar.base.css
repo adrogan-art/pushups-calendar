@@ -85,6 +85,14 @@ background: white;
   opacity: 0.95;
 }
 
+.monthLabelTextMobile {
+  display: none;
+}
+
+.monthLabelTextDesktop {
+  display: inline-block;
+}
+
 .monthBody {
   padding: 2mm;
   box-sizing: border-box;

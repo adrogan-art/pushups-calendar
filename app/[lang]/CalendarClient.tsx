@@ -84,6 +84,7 @@ type DayCell = {
 
 type MonthGrid = {
   title: string;
+  titleFull: string;
   weeks: DayCell[][];
 };
 
@@ -121,14 +122,16 @@ function buildMonthGrid(
   const finalWeeks = trimmed.length ? trimmed : [weeks[0]];
 
   const fullTitle = formatMonthTitleFull(firstOfMonth, lang);
-  const finalTitle =
+  const shortTitle =
     finalWeeks.length === 1
       ? formatMonthTitleShort(firstOfMonth, lang)
       : lang === "ru"
       ? capitalize(fullTitle)
       : fullTitle;
 
-  return { title: finalTitle, weeks: finalWeeks };
+  const fullDisplay = lang === "ru" ? capitalize(fullTitle) : fullTitle;
+
+  return { title: shortTitle, titleFull: fullDisplay, weeks: finalWeeks };
 }
 
 /* ===== component ===== */
@@ -287,17 +290,27 @@ export default function CalendarClient({ lang }: { lang: Locale }) {
               <LangSwitch />
             </div>
 
-            {isTelegramWebView ? (
-              <button className="btn btnHint" type="button">
-                {lang === "ru"
-                  ? "Для печати A4 откройте во внешнем браузере"
-                  : "To print A4, open in external browser"}
-              </button>
-            ) : (
+            <div className="printActions">
+              <p className="printHintInline">
+                {lang === "ru" ? (
+                  <>
+                    Печать не работает?
+                    <br />
+                    Откройте во внешнем браузере.
+                  </>
+                ) : (
+                  <>
+                    Print not working?
+                    <br />
+                    Open in external browser.
+                  </>
+                )}
+              </p>
+
               <button className="btn" onClick={() => window.print()}>
                 {dict.ui.print}
               </button>
-            )}
+            </div>
           </div>
         </div>
 
@@ -325,7 +338,7 @@ export default function CalendarClient({ lang }: { lang: Locale }) {
 
             <div className="months">
               {months.map(({ y, m }, idx) => {
-                const { title: monthTitle, weeks } = buildMonthGrid(
+                const { title: monthTitle, titleFull, weeks } = buildMonthGrid(
                   y,
                   m,
                   pushupByISO,
@@ -338,7 +351,12 @@ export default function CalendarClient({ lang }: { lang: Locale }) {
                     className={`month ${idx === 0 ? "showDow" : ""}`}
                   >
                     <div className="monthLabel">
-                      <span className="monthLabelText">{monthTitle}</span>
+                      <span className="monthLabelText monthLabelTextDesktop">
+                        {monthTitle}
+                      </span>
+                      <span className="monthLabelText monthLabelTextMobile">
+                        {titleFull}
+                      </span>
                     </div>
 
                     <div className="monthBody">

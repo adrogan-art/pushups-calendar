@@ -97,6 +97,13 @@ body {
   gap: 12px;
 }
 
+.printActions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
 /* Стабильный вид переключателя RU/EN */
 .langSwitch {
   display: inline-flex;
@@ -178,12 +185,12 @@ body {
   cursor: pointer;
 }
 
-.btnHint {
-  max-width: 260px;
-  white-space: normal;
-  text-align: left;
-  font-size: 12px;
-  line-height: 1.35;
+.printHintInline {
+  display: none;
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.3;
+  opacity: 0.7;
 }
 
 /* ===== sheet preview wrapper ===== */
@@ -226,9 +233,15 @@ body {
     font-size: 13px;
   }
 
-  .btnHint {
-    max-width: none;
-    text-align: center;
+  .printActions {
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .printHintInline {
+    display: block;
+    text-align: right;
   }
 
   .content {
@@ -249,6 +262,7 @@ body {
 
   .topbarRight {
     justify-content: space-between;
+    gap: 8px;
   }
 
   .controls {
@@ -285,6 +299,14 @@ body {
     font-size: 9pt;
     font-weight: 800;
     opacity: 0.9;
+  }
+
+  .monthLabelTextMobile {
+    display: inline;
+  }
+
+  .monthLabelTextDesktop {
+    display: none;
   }
 
   .monthBody {

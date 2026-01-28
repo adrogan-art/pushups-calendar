@@ -21,9 +21,10 @@ const metaByLang: Record<
 export async function generateMetadata({
   params,
 }: {
-  params: { lang: string };
+  params: Promise<{ lang: string }>;
 }): Promise<Metadata> {
-  const m = metaByLang[params.lang] ?? metaByLang.ru;
+  const { lang } = await params;
+  const m = metaByLang[lang] ?? metaByLang.ru;
 
   return {
     title: m.title,
@@ -32,7 +33,7 @@ export async function generateMetadata({
     openGraph: {
       title: m.title,
       description: m.description,
-      url: `/${params.lang}`,
+      url: `/${lang}`,
       siteName: "100PushApp",
       type: "website",
       images: [

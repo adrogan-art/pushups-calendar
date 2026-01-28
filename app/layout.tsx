@@ -20,6 +20,10 @@ export const metadata: Metadata = {
   description:
     "Челлендж на 100 дней: начните с одного отжимания, каждый день добавляйте по одному и отмечайте прогресс в календаре A4.",
   metadataBase: new URL("https://100pushapp.vercel.app"),
+  icons: {
+    icon: "/window.svg",
+    shortcut: "/window.svg",
+  },
   openGraph: {
     title: "100 отжиманий — челлендж",
     description:
@@ -27,14 +31,6 @@ export const metadata: Metadata = {
     url: "/",
     siteName: "100PushApp",
     type: "website",
-    images: [
-      {
-        url: "/og-ru.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Челлендж 100 отжиманий",
-      },
-    ],
   },
 };
 
