@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 
 const metaByLang: Record<string, { title: string; description: string }> = {
   ru: {
-    title: "100 отжиманий — челлендж",
-    description: "Календарь для отслеживания прогресса. Визуализация, мотивация и удобная печать.",
+    title: "100 отжиманий — календарь",
+    description: "Трекер на 100 дней: печатай календарь и отмечай дни!",
   },
   en: {
     title: "100 push-ups — challenge",
@@ -30,7 +30,7 @@ export async function generateMetadata({
       type: "website",
       images: [
         {
-          url: "/og.png", // или "/og.jpg" — должно совпадать с файлом в public
+          url: "/og.jpg", // или "/og.jpg" — должно совпадать с файлом в public
           width: 1200,
           height: 630,
           alt: m.title,
