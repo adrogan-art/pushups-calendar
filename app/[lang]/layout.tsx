@@ -1,13 +1,20 @@
 import type { Metadata } from "next";
 
-const metaByLang: Record<string, { title: string; description: string }> = {
+const metaByLang: Record<
+  string,
+  { title: string; description: string; ogImage: string }
+> = {
   ru: {
-    title: "100 отжиманий — календарь",
-    description: "Трекер на 100 дней: печатай календарь и отмечай дни!",
+    title: "100 отжиманий — челлендж",
+    description:
+      "Челлендж на 100 дней: начните с одного отжимания, каждый день добавляйте по одному и отмечайте прогресс в календаре A4.",
+    ogImage: "/og-ru.jpg",
   },
   en: {
     title: "100 push-ups — challenge",
-    description: "A printable 100-day progress calendar: track, stay motivated, and keep going.",
+    description:
+      "100‑day push-up challenge: start with one push-up, add one more every day and track your progress on a printable A4 calendar.",
+    ogImage: "/og-en.jpg",
   },
 };
 
@@ -30,7 +37,7 @@ export async function generateMetadata({
       type: "website",
       images: [
         {
-          url: "/og.jpg", // или "/og.jpg" — должно совпадать с файлом в public
+          url: m.ogImage,
           width: 1200,
           height: 630,
           alt: m.title,

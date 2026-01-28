@@ -23,6 +23,29 @@ body {
   gap: 14px;
 }
 
+/* ===== intro block ===== */
+
+.intro {
+  background: #ffffff;
+  border: 1px solid #ececec;
+  border-radius: 14px;
+  padding: 14px 16px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #222222;
+}
+
+.introMain {
+  margin: 0 0 4px;
+  font-weight: 600;
+}
+
+.introSub {
+  margin: 0;
+  font-size: 13px;
+  opacity: 0.8;
+}
+
 /* ===== topbar ===== */
 
 .topbar {
@@ -37,6 +60,35 @@ body {
   font-size: 28px;
   font-weight: 800;
   line-height: 1.1;
+  position: relative;
+  padding: 4px 32px 4px 0;
+  border-radius: 8px;
+  cursor: text;
+  transition:
+    background-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.screenTitle[contenteditable="true"]::after {
+  content: "✎";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+.screenTitle[contenteditable="true"]:hover,
+.screenTitle[contenteditable="true"]:focus-visible {
+  background-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04);
+}
+
+.screenTitle[contenteditable="true"]:hover::after,
+.screenTitle[contenteditable="true"]:focus-visible::after {
+  opacity: 0.5;
 }
 
 .topbarRight {
@@ -126,6 +178,14 @@ body {
   cursor: pointer;
 }
 
+.btnHint {
+  max-width: 260px;
+  white-space: normal;
+  text-align: left;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
 /* ===== sheet preview wrapper ===== */
 
 .sheetWrap {
@@ -155,6 +215,20 @@ body {
 @media screen and (max-width: 640px) {
   .page {
     padding: 12px 8px;
+  }
+
+  .screenTitle {
+    padding-right: 28px;
+  }
+
+  .intro {
+    padding: 12px;
+    font-size: 13px;
+  }
+
+  .btnHint {
+    max-width: none;
+    text-align: center;
   }
 
   .content {

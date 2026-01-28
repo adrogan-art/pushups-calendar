@@ -144,9 +144,23 @@ export default function CalendarClient({ lang }: { lang: Locale }) {
   // seed для цитаты: на сервере его нет, чтобы не было hydration mismatch,
   // на клиенте задаём один раз после гидрации (будет меняться при refresh)
   const [quoteSeed, setQuoteSeed] = useState<string | null>(null);
+  const [isTelegramWebView, setIsTelegramWebView] = useState(false);
 
   useEffect(() => {
     setQuoteSeed(String(Date.now()));
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const ua = navigator.userAgent || "";
+    const isTG =
+      /Telegram/i.test(ua) ||
+      /TGWebApp/i.test(ua) ||
+      // некоторые мобильные клиенты Telegram помечают webview иначе,
+      // но наличие объекта Telegram.WebApp — надёжный признак
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      typeof (window as any).Telegram?.WebApp !== "undefined";
+    setIsTelegramWebView(isTG);
   }, []);
 
   const quote = useMemo(() => {
@@ -242,6 +256,19 @@ export default function CalendarClient({ lang }: { lang: Locale }) {
   return (
     <main className="page">
       <div className="content">
+        <section className="intro">
+          <p className="introMain">
+            {lang === "en"
+              ? "100‑day push-up challenge: start with one push-up and add one every day."
+              : "Челлендж на 100 дней: начните с одного отжимания и каждый день добавляйте по одному."}
+          </p>
+          <p className="introSub">
+            {lang === "en"
+              ? "Print the calendar, tick off completed days, and steadily reach 100."
+              : "Распечатайте календарь, отмечайте выполненные дни и шаг за шагом дойдите до 100."}
+          </p>
+        </section>
+
         <div className="topbar">
           <h1
             className="screenTitle"
@@ -260,9 +287,17 @@ export default function CalendarClient({ lang }: { lang: Locale }) {
               <LangSwitch />
             </div>
 
-            <button className="btn" onClick={() => window.print()}>
-              {dict.ui.print}
-            </button>
+            {isTelegramWebView ? (
+              <button className="btn btnHint" type="button">
+                {lang === "ru"
+                  ? "Для печати A4 откройте во внешнем браузере"
+                  : "To print A4, open in external browser"}
+              </button>
+            ) : (
+              <button className="btn" onClick={() => window.print()}>
+                {dict.ui.print}
+              </button>
+            )}
           </div>
         </div>
 

@@ -11,6 +11,7 @@
 
   /* скрываем экранный UI */
   .topbar,
+  .intro,
   .controls,
   .langSwitch,
   .btn {
