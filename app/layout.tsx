@@ -29,7 +29,7 @@ export const metadata: Metadata = {
       {
         url: "/og.png",
         width: 1200,
-        height: 900,
+        height: 630,
         alt: "Календарь 100 отжиманий",
       },
     ],
