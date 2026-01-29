@@ -150,7 +150,8 @@ export default function CalendarClient({ lang }: { lang: Locale }) {
   const [isTelegramWebView, setIsTelegramWebView] = useState(false);
 
   useEffect(() => {
-    setQuoteSeed(String(Date.now()));
+    const t = window.setTimeout(() => setQuoteSeed(String(Date.now())), 0);
+    return () => window.clearTimeout(t);
   }, []);
 
   useEffect(() => {
@@ -163,7 +164,8 @@ export default function CalendarClient({ lang }: { lang: Locale }) {
       // но наличие объекта Telegram.WebApp — надёжный признак
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       typeof (window as any).Telegram?.WebApp !== "undefined";
-    setIsTelegramWebView(isTG);
+    const t = window.setTimeout(() => setIsTelegramWebView(isTG), 0);
+    return () => window.clearTimeout(t);
   }, []);
 
   const quote = useMemo(() => {
@@ -291,21 +293,23 @@ export default function CalendarClient({ lang }: { lang: Locale }) {
             </div>
 
             <div className="printActions">
-              <p className="printHintInline">
-                {lang === "ru" ? (
-                  <>
-                    Печать не работает?
-                    <br />
-                    Откройте во внешнем браузере.
-                  </>
-                ) : (
-                  <>
-                    Print not working?
-                    <br />
-                    Open in external browser.
-                  </>
-                )}
-              </p>
+              {isTelegramWebView && (
+                <p className="printHintInline">
+                  {lang === "ru" ? (
+                    <>
+                      В Телеграме кнопка «Печать» не работает?
+                      <br />
+                      Откройте в другом браузере.
+                    </>
+                  ) : (
+                    <>
+                      Print button not working in Telegram?
+                      <br />
+                      Open in another browser.
+                    </>
+                  )}
+                </p>
+              )}
 
               <button className="btn" onClick={() => window.print()}>
                 {dict.ui.print}

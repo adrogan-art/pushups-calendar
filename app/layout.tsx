@@ -44,7 +44,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           content="telephone=no, date=no, email=no, address=no"
         />
       </head>
-      <body>{children}</body>
+      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        {children}
+      </body>
     </html>
   );
 }
