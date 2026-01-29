@@ -1,6 +1,7 @@
 /* =========================
    Screen UI (desktop + mobile)
    ========================= */
+   :root { color-scheme: light; }
 
 html,
 body {
